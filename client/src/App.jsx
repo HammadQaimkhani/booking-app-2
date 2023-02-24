@@ -1,9 +1,12 @@
-import Header from "./components/Header";
+import { Route, Routes } from "react-router-dom";
+import Login from "./components/Login";
+import IndexPage from "./components/IndexPage";
 function App() {
   return (
-    <div className='App'>
-      <Header />
-    </div>
+    <Routes>
+      <Route index element={<IndexPage />} />
+      <Route path='/login' element={<Login />} />
+    </Routes>
   );
 }
 
