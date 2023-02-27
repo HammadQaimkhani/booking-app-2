@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "./Header";
+import axios from "axios";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -9,9 +10,11 @@ const Register = () => {
 
   const resgisterTest = async e => {
     await e.preventDefault();
-    const res = await fetch("http://localhost:8000/register");
-    const data = await res.json();
-    console.log(data);
+    axios.post("http://localhost:8000/register", {
+      name,
+      email,
+      password,
+    });
   };
 
   return (
