@@ -27,6 +27,8 @@ const Login = () => {
           Don't have account yet? <Link to={"/register"}>Register now</Link>
         </p>
       </div>
+
+      <div></div>
     </>
   );
 };
