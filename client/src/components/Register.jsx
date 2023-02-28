@@ -9,12 +9,17 @@ const Register = () => {
   const [password, setPassword] = useState("");
 
   const resgisterTest = async e => {
-    await e.preventDefault();
-    axios.post("http://localhost:8000/register", {
-      name,
-      email,
-      password,
-    });
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:8000/register", {
+        name,
+        email,
+        password,
+      });
+      alert("Registration completed!!");
+    } catch (error) {
+      alert("Registration is falied please try again....");
+    }
   };
 
   return (

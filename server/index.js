@@ -23,6 +23,18 @@ app.post("/register", async (req, res) => {
   res.json(user);
 });
 
+// post the data from db
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  console.log(email, password);
+  const user = await User.findOne({ email });
+  if (user) {
+    res.json("user found");
+  } else {
+    res.json("user not found");
+  }
+});
+
 mongoose.set("strictQuery", false);
 
 app.listen(process.env.PORT, () => {
