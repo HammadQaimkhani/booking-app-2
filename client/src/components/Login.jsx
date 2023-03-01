@@ -1,25 +1,30 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Header from "./Header";
 
 const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [redirect, setRedirect] = useState(false);
 
   const loginSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8000/login", {
+      await axios.post("http://127.0.0.1:8000/login", {
         email,
         password,
       });
-      alert("login Succefully");
+      setRedirect(true);
     } catch (error) {
-      alert("please enter the correct password");
+      alert("please enter the correct email/password");
       console.log(error);
     }
   };
+
+  if (redirect) {
+    return <Navigate to={"/"} />;
+  }
   return (
     <>
       <Header />
@@ -48,8 +53,6 @@ const Login = () => {
           Don't have account yet? <Link to={"/register"}>Register now</Link>
         </p>
       </div>
-
-      <div></div>
     </>
   );
 };
