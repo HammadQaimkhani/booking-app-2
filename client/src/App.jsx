@@ -4,6 +4,7 @@ import IndexPage from "./components/IndexPage";
 import Register from "./components/Register";
 import { UserContextProvider } from "./userContext";
 import axios from "axios";
+import Account from "./components/Account";
 function App() {
   axios.defaults.withCredentials = true;
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route index element={<IndexPage />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/account/:subpage?' element={<Account />} />
       </Routes>
     </UserContextProvider>
   );
