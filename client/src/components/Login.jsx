@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
+import { UserContext } from "../userContext";
 import Header from "./Header";
 
 const Login = () => {
@@ -8,13 +9,16 @@ const Login = () => {
   const [password, setPassword] = useState();
   const [redirect, setRedirect] = useState(false);
 
+  const { setUser } = useContext(UserContext);
+
   const loginSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.post("http://127.0.0.1:8000/login", {
+      const user = await axios.post("http://127.0.0.1:8000/login", {
         email,
         password,
       });
+      setUser(user.data);
       setRedirect(true);
     } catch (error) {
       alert("please enter the correct email/password");

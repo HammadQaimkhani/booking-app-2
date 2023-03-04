@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../userContext";
 
 const Header = () => {
+  const { user } = useContext(UserContext);
   return (
     <>
       <header className='p-6 flex items-center justify-between font-roboto '>
@@ -51,7 +53,7 @@ const Header = () => {
         </div>
 
         {/* Login section */}
-        <Link to='/login'>
+        <Link to={user ? "/account" : "/login"}>
           <div className='flex items-center gap-2 shadow-md shadow-gray-300 px-4 py-2 rounded-full border border-gray-400 cursor-pointer'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -79,6 +81,7 @@ const Header = () => {
                 />
               </svg>
             </div>
+            {!!user && <div>{user.name}</div>}
           </div>
         </Link>
       </header>

@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bycrpt = require("bcryptjs");
+const cookieParser = require("cookie-parser");
 const User = require("./model/UserSchema.js");
 require("dotenv").config();
 
@@ -13,12 +14,15 @@ const bycrptSlat = bycrpt.genSaltSync(10);
 const jwtSecert = "ajkakkajsfkasfksjk";
 
 const app = express();
+
+// middleware
 app.use(
   cors({
     credentials: true,
     origin: "http://127.0.0.1:5173",
   })
 );
+app.use(cookieParser());
 app.use(express.json());
 
 // Register the user
@@ -44,12 +48,13 @@ app.post("/login", async (req, res) => {
       {
         email: user.email,
         id: user._id,
+        name: user.name,
       },
       jwtSecert,
       {},
       (err, token) => {
         if (err) throw err;
-        res.cookie("token", token).json("User is login");
+        res.cookie("token", token).json(user);
       }
     );
   } else {
@@ -57,6 +62,21 @@ app.post("/login", async (req, res) => {
   }
 });
 
+// create route for profile
+app.get("/profile", (req, res) => {
+  const { token } = req.cookies;
+  if (token) {
+    jwt.verify(token, jwtSecert, async (err, tokenData) => {
+      if (err) throw err;
+      const { name, email, _id } = await User.findById(tokenData.id);
+      res.json({ name, email, _id });
+    });
+  } else {
+    res.json(null);
+  }
+});
+
+// connection with database
 mongoose.set("strictQuery", false);
 
 app.listen(process.env.PORT, () => {
