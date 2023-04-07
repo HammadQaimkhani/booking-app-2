@@ -76,6 +76,11 @@ app.get("/profile", (req, res) => {
   }
 });
 
+// create a route for Logout.
+app.post("/logout", (req, res) => {
+  res.cookie("token", "").json(true);
+});
+
 // connection with database
 mongoose.set("strictQuery", false);
 

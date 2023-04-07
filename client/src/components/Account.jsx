@@ -1,15 +1,22 @@
 import React, { useContext, useState } from "react";
 import Header from "./Header";
 import { UserContext } from "../userContext";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Navigate } from "react-router-dom";
+import axios from "axios";
 
 const Account = () => {
-  const { user } = useContext(UserContext);
+  const [redirect, setRedirect] = useState(null);
+  const { user, setUser } = useContext(UserContext);
   let { subpage } = useParams();
   if (subpage === undefined) {
     subpage = "profile";
   }
-  console.log(subpage);
+
+  const logOut = async () => {
+    await axios.post("http://127.0.0.1:8000/logout");
+    setUser(null);
+    setRedirect("/");
+  };
 
   const linkClasses = (type = null) => {
     let classes = "py-2 px-6";
@@ -18,6 +25,10 @@ const Account = () => {
     }
     return classes;
   };
+
+  if (redirect) {
+    return <Navigate to={redirect} />;
+  }
 
   return (
     <>
@@ -36,10 +47,12 @@ const Account = () => {
         </Link>
       </nav>
       {subpage === "profile" && (
-        <div className='text-center mt-8 font-bold'>
-          longged in as {user.name} ({user.email})
+        <div className='text-center mt-8 font-semibold'>
+          logged in as {user.name} ({user.email})
           <br />
-          <button className='bg-primary text-white font-normal px-6 py-2 rounded-full w-[400px] mt-6'>
+          <button
+            className='bg-primary text-white font-normal px-6 py-2 rounded-full w-[400px] mt-6'
+            onClick={logOut}>
             Log out
           </button>
         </div>
