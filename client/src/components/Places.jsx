@@ -93,9 +93,9 @@ const Places = () => {
             <p className='text-gray-500 text-sm px-2'>
               Select all the perks of your place
             </p>
-            <div className='grid gap-2 grid-cols-2 md:grid-cols-4 lg:grid-cols-5 '>
-              <label className='flex items-center gap-1 border p-4 rounded-2xl '>
-                <input type='checkbox' />
+            <div className='grid gap-2 grid-cols-2 md:grid-cols-4 lg:grid-cols-5 mt-2 '>
+              <label className='flex items-center gap-1 border p-4 rounded-2xl cursor-pointer '>
+                <input type='checkbox' className='accent-primary' />
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
@@ -112,8 +112,8 @@ const Places = () => {
 
                 <span>Wifi</span>
               </label>
-              <label className='flex  items-center gap-1 border p-4 rounded-2xl'>
-                <input type='checkbox' />
+              <label className='flex  items-center gap-1 border p-4 rounded-2xl cursor-pointer'>
+                <input type='checkbox' className='accent-primary' />
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
@@ -130,8 +130,8 @@ const Places = () => {
 
                 <span>Free parking spot </span>
               </label>
-              <label className='flex  items-center gap-1 border p-4 rounded-2xl'>
-                <input type='checkbox' />
+              <label className='flex  items-center gap-1 border p-4 rounded-2xl cursor-pointer'>
+                <input type='checkbox' className='accent-primary' />
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
@@ -148,8 +148,8 @@ const Places = () => {
 
                 <span>TV</span>
               </label>
-              <label className='flex  items-center gap-1 border p-4 rounded-2xl'>
-                <input type='checkbox' />
+              <label className='flex  items-center gap-1 border p-4 rounded-2xl cursor-pointer'>
+                <input type='checkbox' className='accent-primary' />
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
@@ -166,8 +166,8 @@ const Places = () => {
 
                 <span>Pets</span>
               </label>
-              <label className='flex  items-center gap-1 border p-4 rounded-2xl'>
-                <input type='checkbox' />
+              <label className='flex  items-center gap-1 border p-4 rounded-2xl cursor-pointer'>
+                <input type='checkbox' className='accent-primary' />
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
@@ -184,6 +184,52 @@ const Places = () => {
 
                 <span>Private Enterace</span>
               </label>
+            </div>
+            {/* code for Extra Info */}
+            <h2 className='text-2xl mt-4 px-2'>Extra info</h2>
+            <p className='text-gray-500 text-sm px-2'>house, rules, etc. </p>
+            <textarea />
+
+            {/* code for Check in & out */}
+            <h2 className='text-2xl mt-4 px-2'>
+              Check in & out times, max guests
+            </h2>
+            <p className='text-gray-500 text-sm px-2'>
+              add check in & out times, remember to have some time window for
+              cleaning the room between guests
+            </p>
+            <div className='grid sm:grid-cols-3 gap-2'>
+              <div>
+                <h3 className='mt-2  ml-4'>check in time</h3>
+                <input
+                  type='text'
+                  placeholder='14:00'
+                  className='w-full mx-2 p-2 border border-gray-200 rounded-2xl'
+                />
+              </div>
+              <div>
+                <h3 className='mt-2  ml-4'>check out time</h3>
+
+                <input
+                  type='text'
+                  placeholder=''
+                  className='w-full mx-2 p-2 border border-gray-200 rounded-2xl'
+                />
+              </div>
+              <div>
+                <h3 className='mt-2 ml-4'>max guest</h3>
+
+                <input
+                  type='text'
+                  placeholder='4'
+                  className='w-full mx-2 p-2 border border-gray-200 rounded-2xl'
+                />
+              </div>
+            </div>
+            <div>
+              <button className='bg-primary text-white my-4 py-2 w-full rounded-2xl text-xl'>
+                save
+              </button>
             </div>
           </form>
         </div>
