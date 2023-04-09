@@ -3,8 +3,10 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bycrpt = require("bcryptjs");
+const imageDownloader = require("image-downloader");
 const cookieParser = require("cookie-parser");
 const User = require("./model/UserSchema.js");
+
 require("dotenv").config();
 
 // create the length of bycrpt password
@@ -79,6 +81,17 @@ app.get("/profile", (req, res) => {
 // create a route for Logout.
 app.post("/logout", (req, res) => {
   res.cookie("token", "").json(true);
+});
+
+// create a route for upload photos.
+app.post("/upload-by-links", async (req, res) => {
+  const { link } = req.body;
+  const newName = Date.now() + ".jpg";
+  await imageDownloader.image({
+    url: link,
+    dest: __dirname + "/uploads" + newName,
+  });
+  res.json(__dirname + "/uploads" + newName);
 });
 
 // connection with database

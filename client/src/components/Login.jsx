@@ -5,8 +5,8 @@ import { UserContext } from "../userContext";
 import Header from "./Header";
 
 const Login = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
 
   const { setUser } = useContext(UserContext);
