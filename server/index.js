@@ -6,6 +6,7 @@ const bycrpt = require("bcryptjs");
 const imageDownloader = require("image-downloader");
 const cookieParser = require("cookie-parser");
 const User = require("./model/UserSchema.js");
+const multer = require("multer");
 
 require("dotenv").config();
 
@@ -26,6 +27,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json());
+app.use("/uploads", express.static(__dirname + "/uploads"));
 
 // Register the user
 app.post("/register", async (req, res) => {
@@ -83,15 +85,21 @@ app.post("/logout", (req, res) => {
   res.cookie("token", "").json(true);
 });
 
-// create a route for upload photos.
+// create a route for upload photos by link.
 app.post("/upload-by-links", async (req, res) => {
   const { link } = req.body;
-  const newName = Date.now() + ".jpg";
+  const newName = "photo" + Date.now() + ".jpg";
   await imageDownloader.image({
     url: link,
-    dest: __dirname + "/uploads" + newName,
+    dest: __dirname + "/uploads/" + newName,
   });
-  res.json(__dirname + "/uploads" + newName);
+  res.json(newName);
+});
+
+// create a route for upload photo by button.
+const photosMiddleware = multer({ dest: "uploads" });
+app.post("/uploads", photosMiddleware.array("photos", 100), (req, res) => {
+  res.json(req.files);
 });
 
 // connection with database

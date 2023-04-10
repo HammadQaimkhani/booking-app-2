@@ -7,7 +7,7 @@ import Places from "./Places";
 
 const Account = () => {
   const [redirect, setRedirect] = useState(null);
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser, ready } = useContext(UserContext);
   let { subpage } = useParams();
   if (subpage === undefined) {
     subpage = "profile";
@@ -29,7 +29,7 @@ const Account = () => {
     return classes;
   };
 
-  if (!user && !redirect) {
+  if (!user && !redirect && ready) {
     return <Navigate to='/login' />;
   }
 
