@@ -22,6 +22,7 @@ const Places = () => {
   // function for added photo by link.
   const addedPhotosByLink = async e => {
     e.preventDefault();
+
     const { data: fileName } = await axios.post(
       "http://127.0.0.1:8000/upload-by-links",
       {
@@ -38,15 +39,21 @@ const Places = () => {
   const uploadPhoto = async e => {
     const files = e.target.files;
     const data = new FormData();
-    data.set("files", files);
-    const { data: fileName } = await axios.post("/uploads", data, {
-      Headers: {
-        "Content-type": "multipart/form-data",
-      },
-    });
-    setAddedPhoto(preValue => {
-      return [...preValue, fileName];
-    });
+    for (let i = 0; i <= files.length; i++) {
+      data.append("photos", files[i]);
+    }
+    axios
+      .post("http://127.0.0.1:8000/uploads", data, {
+        Headers: {
+          "Content-type": "multipart/form-data",
+        },
+      })
+      .then(response => {
+        const { data: fileName } = response;
+        setAddedPhoto(preValue => {
+          return [...preValue, ...fileName];
+        });
+      });
   };
 
   return (
@@ -121,17 +128,22 @@ const Places = () => {
               {/* added photo by links */}
               {addedPhoto.length > 0 &&
                 addedPhoto.map(link => (
-                  <div className=''>
+                  <div className='h-32 flex'>
                     <img
                       src={`http://localhost:8000/uploads/${link}`}
                       alt=''
-                      className='rounded-2xl'
+                      className='rounded-2xl w-full object-cover'
                     />
                   </div>
                 ))}
 
               <label className=' cursor-pointer border border-dashed bg-transparent rounded-2xl p-8 text-2xl text-gray-500 flex justify-center items-center gap-2'>
-                <input type='file' className='hidden ' onChange={uploadPhoto} />
+                <input
+                  type='file'
+                  className='hidden '
+                  onChange={uploadPhoto}
+                  multiple
+                />
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
