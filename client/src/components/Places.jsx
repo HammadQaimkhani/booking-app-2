@@ -1,8 +1,9 @@
 import React from "react";
 import { useState } from "react";
-import axios from "axios  ";
-import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import { Link, Navigate, useParams } from "react-router-dom";
 import Perks from "./Perks";
+import PhotoUploded from "./PhotoUploded";
 
 const Places = () => {
   const { action } = useParams();
@@ -10,51 +11,35 @@ const Places = () => {
   // useState for Inputs of place page.
   const [title, setTitle] = useState("");
   const [address, setAddress] = useState("");
-  const [addedPhoto, setAddedPhoto] = useState([]);
-  const [photoLink, setPhotoLink] = useState("");
   const [description, setDescription] = useState("");
+  const [addedPhoto, setAddedPhoto] = useState([]);
   const [perks, setPerks] = useState([]);
   const [extraInfo, setExtraInfo] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [maxGuests, setMaxGuests] = useState(1);
+  const [redirect, setRedirect] = useState("");
 
-  // function for added photo by link.
-  const addedPhotosByLink = async e => {
+  // created a onSubmit function for Submit the form.
+  const addNewPlaces = async e => {
     e.preventDefault();
 
-    const { data: fileName } = await axios.post(
-      "http://127.0.0.1:8000/upload-by-links",
-      {
-        link: photoLink,
-      }
-    );
-    setAddedPhoto(preValue => {
-      return [...preValue, fileName];
+    const { data } = await axios.post("/places", {
+      title,
+      address,
+      addedPhoto,
+      description,
+      perks,
+      extraInfo,
+      checkIn,
+      checkOut,
+      maxGuests,
     });
-    setPhotoLink("");
+    setRedirect("/account/places");
   };
-
-  // upload photo by using upload button
-  const uploadPhoto = async e => {
-    const files = e.target.files;
-    const data = new FormData();
-    for (let i = 0; i <= files.length; i++) {
-      data.append("photos", files[i]);
-    }
-    axios
-      .post("http://127.0.0.1:8000/uploads", data, {
-        Headers: {
-          "Content-type": "multipart/form-data",
-        },
-      })
-      .then(response => {
-        const { data: fileName } = response;
-        setAddedPhoto(preValue => {
-          return [...preValue, ...fileName];
-        });
-      });
-  };
+  if (redirect) {
+    return <Navigate to={redirect} />;
+  }
 
   return (
     <div className=''>
@@ -83,7 +68,7 @@ const Places = () => {
 
       {action === "new" && (
         <div>
-          <form className='m-4'>
+          <form className='m-4' onSubmit={addNewPlaces}>
             {/* code for title */}
             <h2 className='text-2xl mt-4 px-2'>Title</h2>
             <p className='text-gray-500 text-sm px-2'>
@@ -108,58 +93,8 @@ const Places = () => {
               className='w-full mx-2 p-2 border border-gray-200 rounded-2xl'
             />
             {/* code for photos upload */}
-            <h2 className='text-2xl mt-4 px-2'>Photos</h2>
-            <p className='text-gray-500 text-sm px-2'>more = better</p>
-            <div className='flex gap-2'>
-              <input
-                type='text'
-                value={photoLink}
-                onChange={e => setPhotoLink(e.target.value)}
-                placeholder='Add using a link.....jpg'
-                className='w-full mx-2 p-2 border border-gray-200 rounded-2xl'
-              />
-              <button
-                className='bg-gray-500 px-4 text-white rounded-2xl '
-                onClick={addedPhotosByLink}>
-                Add&nbsp;Photos
-              </button>
-            </div>
-            <div className='mt-2  gap-2 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6'>
-              {/* added photo by links */}
-              {addedPhoto.length > 0 &&
-                addedPhoto.map(link => (
-                  <div className='h-32 flex'>
-                    <img
-                      src={`http://localhost:8000/uploads/${link}`}
-                      alt=''
-                      className='rounded-2xl w-full object-cover'
-                    />
-                  </div>
-                ))}
 
-              <label className=' cursor-pointer border border-dashed bg-transparent rounded-2xl p-8 text-2xl text-gray-500 flex justify-center items-center gap-2'>
-                <input
-                  type='file'
-                  className='hidden '
-                  onChange={uploadPhoto}
-                  multiple
-                />
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  strokeWidth={1.5}
-                  stroke='currentColor'
-                  className='w-8 h-8'>
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    d='M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z'
-                  />
-                </svg>
-                upload
-              </label>
-            </div>
+            <PhotoUploded addedPhoto={addedPhoto} onChange={setAddedPhoto} />
             {/* code for Description */}
             <h2 className='text-2xl mt-4 px-2'>Description</h2>
             <p className='text-gray-500 text-sm px-2'>

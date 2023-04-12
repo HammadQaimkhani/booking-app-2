@@ -1,6 +1,16 @@
 import React from "react";
 
-const Perks = (selected, onChange) => {
+const Perks = ({ selected, onChange }) => {
+  // onChange func for check the which ratio button is pushed.
+  const handleClicked = e => {
+    const { checked, name } = e.target;
+    if (checked) {
+      onChange([...selected, name]);
+    } else {
+      onChange([...selected.filter(selectedName => selectedName !== name)]);
+    }
+  };
+
   return (
     <>
       <h2 className='text-2xl mt-4 px-2'>Perks</h2>
@@ -9,7 +19,12 @@ const Perks = (selected, onChange) => {
       </p>
       <div className='grid gap-2 grid-cols-2 md:grid-cols-4 lg:grid-cols-5 mt-2 '>
         <label className='flex items-center gap-1 border p-4 rounded-2xl cursor-pointer '>
-          <input type='checkbox' className='accent-primary' />
+          <input
+            type='checkbox'
+            className='accent-primary'
+            onChange={handleClicked}
+            name='wifi'
+          />
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
@@ -27,7 +42,12 @@ const Perks = (selected, onChange) => {
           <span>Wifi</span>
         </label>
         <label className='flex  items-center gap-1 border p-4 rounded-2xl cursor-pointer'>
-          <input type='checkbox' className='accent-primary' />
+          <input
+            type='checkbox'
+            className='accent-primary'
+            onChange={handleClicked}
+            name='parking'
+          />
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
@@ -45,7 +65,12 @@ const Perks = (selected, onChange) => {
           <span>Free parking spot </span>
         </label>
         <label className='flex  items-center gap-1 border p-4 rounded-2xl cursor-pointer'>
-          <input type='checkbox' className='accent-primary' />
+          <input
+            type='checkbox'
+            className='accent-primary'
+            onChange={handleClicked}
+            name='tv'
+          />
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
@@ -63,7 +88,12 @@ const Perks = (selected, onChange) => {
           <span>TV</span>
         </label>
         <label className='flex  items-center gap-1 border p-4 rounded-2xl cursor-pointer'>
-          <input type='checkbox' className='accent-primary' />
+          <input
+            type='checkbox'
+            className='accent-primary'
+            onChange={handleClicked}
+            name='Pet'
+          />
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
@@ -81,7 +111,12 @@ const Perks = (selected, onChange) => {
           <span>Pets</span>
         </label>
         <label className='flex  items-center gap-1 border p-4 rounded-2xl cursor-pointer'>
-          <input type='checkbox' className='accent-primary' />
+          <input
+            type='checkbox'
+            className='accent-primary'
+            onChange={handleClicked}
+            name='enterance'
+          />
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'

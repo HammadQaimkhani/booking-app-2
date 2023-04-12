@@ -6,6 +6,7 @@ const bycrpt = require("bcryptjs");
 const imageDownloader = require("image-downloader");
 const cookieParser = require("cookie-parser");
 const User = require("./model/UserSchema.js");
+const Place = require("./model/place.js");
 const multer = require("multer");
 const fs = require("fs");
 
@@ -108,9 +109,40 @@ app.post("/uploads", photosMiddleware.array("photos", 100), (req, res) => {
     const newPath = path + "." + ext;
     fs.renameSync(path, newPath);
     uplodedFile.push(newPath.replace("uploads", ""));
-    console.log(uplodedFile);
   }
   res.json(uplodedFile);
+});
+
+// create a route for sumbited the data of places page.
+app.post("/places", (req, res) => {
+  const { token } = req.cookies;
+  const {
+    title,
+    address,
+    addedPhotos,
+    desicription,
+    perks,
+    extraInfo,
+    checkIn,
+    checkOut,
+    maxGuest,
+  } = req.body;
+  jwt.verify(token, jwtSecert, async (err, tokenData) => {
+    if (err) throw err;
+    const placeDoc = await Place.create({
+      owner: tokenData.id,
+      title,
+      address,
+      addedPhotos,
+      desicription,
+      perks,
+      extraInfo,
+      checkIn,
+      checkOut,
+      maxGuest,
+    });
+  });
+  res.json(placeDoc);
 });
 
 // connection with database
