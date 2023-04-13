@@ -4,7 +4,9 @@ import IndexPage from "./components/IndexPage";
 import Register from "./components/Register";
 import { UserContextProvider } from "./userContext";
 import axios from "axios";
-import Account from "./components/Account";
+import ProfilePage from "./components/ProfilePage";
+import Places from "./components/Places";
+import PlacesFormPage from "./components/PlacesFormPage";
 function App() {
   axios.defaults.withCredentials = true;
   return (
@@ -13,8 +15,9 @@ function App() {
         <Route index element={<IndexPage />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/account/:subpage?' element={<Account />} />
-        <Route path='/account/:subpage/:action' element={<Account />} />
+        <Route path='/account' element={<ProfilePage />} />
+        <Route path='/account/places' element={<Places />} />
+        <Route path='/account/places/new' element={<PlacesFormPage />} />
       </Routes>
     </UserContextProvider>
   );

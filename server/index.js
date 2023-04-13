@@ -141,8 +141,8 @@ app.post("/places", (req, res) => {
       checkOut,
       maxGuest,
     });
+    res.json(placeDoc);
   });
-  res.json(placeDoc);
 });
 
 // connection with database

@@ -1,0 +1,52 @@
+import React, { useContext, useState } from "react";
+import Header from "./Header";
+import { UserContext } from "../userContext";
+import { useParams, Link, Navigate } from "react-router-dom";
+import axios from "axios";
+import Places from "./Places";
+import AccountNav from "./AccountNav";
+
+const Account = () => {
+  const [redirect, setRedirect] = useState(null);
+  const { user, setUser, ready } = useContext(UserContext);
+  let { subpage } = useParams();
+  if (subpage === undefined) {
+    subpage = "profile";
+  }
+
+  const logOut = async () => {
+    await axios.post("http://127.0.0.1:8000/logout");
+    setUser(null);
+    setRedirect("/");
+  };
+
+  if (!user && !redirect && ready) {
+    return <Navigate to='/login' />;
+  }
+
+  if (redirect) {
+    return <Navigate to={redirect} />;
+  }
+
+  return (
+    <>
+      <Header />
+      <AccountNav />
+
+      {subpage === "profile" && (
+        <div className='text-center mt-8 font-semibold'>
+          logged in as {user.name} ({user.email})
+          <br />
+          <button
+            className='bg-primary text-white font-normal px-6 py-2 rounded-full w-[400px] mt-6'
+            onClick={logOut}>
+            Log out
+          </button>
+        </div>
+      )}
+      {subpage === "places" && <Places />}
+    </>
+  );
+};
+
+export default Account;
