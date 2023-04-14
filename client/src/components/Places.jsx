@@ -1,14 +1,23 @@
 import React from "react";
-
 import { Link, useParams } from "react-router-dom";
-
-import PlacesFormPage from "./PlacesFormPage";
 import Header from "./Header";
 import AccountNav from "./AccountNav";
+import { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
 
 const Places = () => {
+  // create a useState for Places data.
+  const [places, setPlaces] = useState([]);
+  // create a useEffect hook for fetch the added places data.
+  useEffect(() => {
+    axios.get("http://127.0.0.1:8000/place").then(({ data }) => {
+      setPlaces(data);
+    });
+  }, []);
+
   return (
-    <div className=''>
+    <div>
       <Header />
       <AccountNav />
       <div className='text-center mt-4'>
@@ -30,6 +39,24 @@ const Places = () => {
           </svg>
           Add new places
         </Link>
+      </div>
+      <div className='mt-4'>
+        {places.length > 0 &&
+          places.map(place => (
+            <Link
+              to={"/account/places/" + place._id}
+              className=' flex gap-4 bg-gray-100 p-4 rounded-2xl mx-2'>
+              <div className='w-32 h-32 bg-gray-300 grow shrink-0'>
+                {place.photos.length > 0 && (
+                  <img src={place.photos[0]} alt='' />
+                )}
+              </div>
+              <div className=''>
+                <h2 className='text-xl '>{place.title}</h2>
+                <p className='text-sm mt-2'>{place.description}</p>
+              </div>
+            </Link>
+          ))}
       </div>
     </div>
   );

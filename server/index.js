@@ -119,8 +119,8 @@ app.post("/places", (req, res) => {
   const {
     title,
     address,
-    addedPhotos,
-    desicription,
+    photos,
+    description,
     perks,
     extraInfo,
     checkIn,
@@ -133,8 +133,8 @@ app.post("/places", (req, res) => {
       owner: tokenData.id,
       title,
       address,
-      addedPhotos,
-      desicription,
+      photos,
+      description,
       perks,
       extraInfo,
       checkIn,
@@ -143,6 +143,22 @@ app.post("/places", (req, res) => {
     });
     res.json(placeDoc);
   });
+});
+
+// create a get route to get data of places from DB.
+app.get("/place", (req, res) => {
+  const { token } = req.cookies;
+  jwt.verify(token, jwtSecert, async (err, tokenData) => {
+    if (err) throw err;
+    const { id } = tokenData;
+    res.json(await Place.find({ owner: id }));
+  });
+});
+
+// create a route for Get data with ID.
+app.get("/place/:id", async (req, res) => {
+  const { id } = req.params;
+  res.json(await Place.findById(id));
 });
 
 // connection with database

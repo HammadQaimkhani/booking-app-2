@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Perks from "./Perks";
 import PhotoUploded from "./PhotoUploded";
@@ -6,10 +6,11 @@ import { useState } from "react";
 import axios from "axios";
 import AccountNav from "./AccountNav";
 import Header from "./Header";
-import { Navigate } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 const PlacesFormPage = () => {
   // useState for Inputs of place page.
+  const { id } = useParams();
   const [title, setTitle] = useState("");
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
@@ -41,6 +42,25 @@ const PlacesFormPage = () => {
   if (redirect) {
     return <Navigate to={redirect} />;
   }
+
+  useEffect(() => {
+    if (!id) {
+      return;
+    } else {
+      axios.get("http://127.0.0.1:8000/place/" + id).then(response => {
+        const { data } = response;
+        setTitle(data.title);
+        setAddress(data.address);
+        setAddedPhoto(data.photos);
+        setDescription(data.description);
+        setPerks(data.perks);
+        setExtraInfo(data.extraInfo);
+        setCheckIn(data.checkIn);
+        setCheckOut(data.checkOut);
+        setMaxGuests(data.maxGuest);
+      });
+    }
+  }, [id]);
 
   return (
     <>

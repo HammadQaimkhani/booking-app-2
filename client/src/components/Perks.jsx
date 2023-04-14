@@ -23,6 +23,7 @@ const Perks = ({ selected, onChange }) => {
             type='checkbox'
             className='accent-primary'
             onChange={handleClicked}
+            checked={selected.includes("wifi")}
             name='wifi'
           />
           <svg
@@ -46,6 +47,7 @@ const Perks = ({ selected, onChange }) => {
             type='checkbox'
             className='accent-primary'
             onChange={handleClicked}
+            checked={selected.includes("parking")}
             name='parking'
           />
           <svg
@@ -69,6 +71,7 @@ const Perks = ({ selected, onChange }) => {
             type='checkbox'
             className='accent-primary'
             onChange={handleClicked}
+            checked={selected.includes("tv")}
             name='tv'
           />
           <svg
@@ -92,7 +95,8 @@ const Perks = ({ selected, onChange }) => {
             type='checkbox'
             className='accent-primary'
             onChange={handleClicked}
-            name='Pet'
+            checked={selected.includes("pets")}
+            name='Pets'
           />
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -115,6 +119,7 @@ const Perks = ({ selected, onChange }) => {
             type='checkbox'
             className='accent-primary'
             onChange={handleClicked}
+            checked={selected.includes("enterance")}
             name='enterance'
           />
           <svg
