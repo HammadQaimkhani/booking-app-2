@@ -113,19 +113,19 @@ app.post("/uploads", photosMiddleware.array("photos", 100), (req, res) => {
   res.json(uplodedFile);
 });
 
-// create a route for sumbited the data of places page.
+// create a route for sumbited the data into DB.
 app.post("/places", (req, res) => {
   const { token } = req.cookies;
   const {
     title,
     address,
-    photos,
+    addedPhotos,
     description,
     perks,
     extraInfo,
     checkIn,
     checkOut,
-    maxGuest,
+    maxGuests,
   } = req.body;
   jwt.verify(token, jwtSecert, async (err, tokenData) => {
     if (err) throw err;
@@ -133,20 +133,20 @@ app.post("/places", (req, res) => {
       owner: tokenData.id,
       title,
       address,
-      photos,
+      photos: addedPhotos,
       description,
       perks,
       extraInfo,
       checkIn,
       checkOut,
-      maxGuest,
+      maxGuests,
     });
     res.json(placeDoc);
   });
 });
 
 // create a get route to get data of places from DB.
-app.get("/place", (req, res) => {
+app.get("/places", (req, res) => {
   const { token } = req.cookies;
   jwt.verify(token, jwtSecert, async (err, tokenData) => {
     if (err) throw err;
@@ -156,9 +156,45 @@ app.get("/place", (req, res) => {
 });
 
 // create a route for Get data with ID.
-app.get("/place/:id", async (req, res) => {
+app.get("/places/:id", async (req, res) => {
   const { id } = req.params;
   res.json(await Place.findById(id));
+});
+
+// create a route to update the existing data.
+app.put("/places", (req, res) => {
+  const { token } = req.cookies;
+  const {
+    id,
+    title,
+    address,
+    addedPhotos,
+    description,
+    perks,
+    extraInfo,
+    checkIn,
+    checkOut,
+    maxGuests,
+  } = req.body;
+
+  jwt.verify(token, jwtSecert, async (err, tokenData) => {
+    const placeDoc = await Place.findById(id);
+    if (tokenData.id === placeDoc.owner.toString()) {
+      placeDoc.set({
+        title,
+        address,
+        photos: addedPhotos,
+        description,
+        perks,
+        extraInfo,
+        checkIn,
+        checkOut,
+        maxGuests,
+      });
+      await placeDoc.save();
+      res.json("ok");
+    }
+  });
 });
 
 // connection with database

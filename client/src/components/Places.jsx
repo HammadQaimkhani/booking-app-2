@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Header from "./Header";
 import AccountNav from "./AccountNav";
 import { useEffect } from "react";
@@ -11,7 +11,7 @@ const Places = () => {
   const [places, setPlaces] = useState([]);
   // create a useEffect hook for fetch the added places data.
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/place").then(({ data }) => {
+    axios.get("http://127.0.0.1:8000/places").then(({ data }) => {
       setPlaces(data);
     });
   }, []);
@@ -42,13 +42,17 @@ const Places = () => {
       </div>
       <div className='mt-4'>
         {places.length > 0 &&
-          places.map(place => (
+          places.map((place, index) => (
             <Link
+              key={index}
               to={"/account/places/" + place._id}
               className=' flex gap-4 bg-gray-100 p-4 rounded-2xl mx-2'>
               <div className='w-32 h-32 bg-gray-300 grow shrink-0'>
                 {place.photos.length > 0 && (
-                  <img src={place.photos[0]} alt='' />
+                  <img
+                    src={"http:localhost:8000/uploads/" + place.photos[0]}
+                    alt=''
+                  />
                 )}
               </div>
               <div className=''>

@@ -96,7 +96,7 @@ const Perks = ({ selected, onChange }) => {
             className='accent-primary'
             onChange={handleClicked}
             checked={selected.includes("pets")}
-            name='Pets'
+            name='pets'
           />
           <svg
             xmlns='http://www.w3.org/2000/svg'

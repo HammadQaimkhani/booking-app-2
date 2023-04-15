@@ -20,12 +20,11 @@ const PlacesFormPage = () => {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [maxGuests, setMaxGuests] = useState(1);
-  const [redirect, setRedirect] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
   // created a onSubmit function for Submit the form.
-  const addNewPlaces = async e => {
-    e.preventDefault();
-    const { data } = await axios.post("http://127.0.0.1:8000/places", {
+  const savePlaces = async e => {
+    const placeData = {
       title,
       address,
       addedPhoto,
@@ -35,19 +34,32 @@ const PlacesFormPage = () => {
       checkIn,
       checkOut,
       maxGuests,
-    });
-    setRedirect("/account/places");
+    };
+    e.preventDefault();
+    if (id) {
+      // update
+      await axios.put("http://127.0.0.1:8000/places", {
+        id,
+        ...placeData,
+      });
+      setRedirect(true);
+    } else {
+      // save the data
+      await axios.post("http://127.0.0.1:8000/places", placeData);
+      setRedirect(true);
+    }
   };
 
+  // to redirect the /account/places routes.
   if (redirect) {
-    return <Navigate to={redirect} />;
+    return <Navigate to={"/account/places"} />;
   }
 
   useEffect(() => {
     if (!id) {
       return;
     } else {
-      axios.get("http://127.0.0.1:8000/place/" + id).then(response => {
+      axios.get("http://127.0.0.1:8000/places/" + id).then(response => {
         const { data } = response;
         setTitle(data.title);
         setAddress(data.address);
@@ -67,7 +79,7 @@ const PlacesFormPage = () => {
       <div>
         <Header />
         <AccountNav />
-        <form className='m-4' onSubmit={addNewPlaces}>
+        <form className='m-4' onSubmit={savePlaces}>
           {/* code for title */}
           <h2 className='text-2xl mt-4 px-2'>Title</h2>
           <p className='text-gray-500 text-sm px-2'>
