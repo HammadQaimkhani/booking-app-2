@@ -49,16 +49,8 @@ const PlacesFormPage = () => {
       setRedirect(true);
     }
   };
-
-  // to redirect the /account/places routes.
-  if (redirect) {
-    return <Navigate to={"/account/places"} />;
-  }
-
   useEffect(() => {
-    if (!id) {
-      return;
-    } else {
+    if (id) {
       axios.get("http://127.0.0.1:8000/places/" + id).then(response => {
         const { data } = response;
         setTitle(data.title);
@@ -69,10 +61,15 @@ const PlacesFormPage = () => {
         setExtraInfo(data.extraInfo);
         setCheckIn(data.checkIn);
         setCheckOut(data.checkOut);
-        setMaxGuests(data.maxGuest);
+        setMaxGuests(data.maxGuests);
       });
     }
   }, [id]);
+
+  // to redirect the /account/places routes.
+  if (redirect) {
+    return <Navigate to={"/account/places"} />;
+  }
 
   return (
     <>

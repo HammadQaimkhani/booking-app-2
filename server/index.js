@@ -119,7 +119,7 @@ app.post("/places", (req, res) => {
   const {
     title,
     address,
-    addedPhotos,
+    addedPhoto,
     description,
     perks,
     extraInfo,
@@ -133,7 +133,7 @@ app.post("/places", (req, res) => {
       owner: tokenData.id,
       title,
       address,
-      photos: addedPhotos,
+      photos: addedPhoto,
       description,
       perks,
       extraInfo,
@@ -168,7 +168,7 @@ app.put("/places", (req, res) => {
     id,
     title,
     address,
-    addedPhotos,
+    addedPhoto,
     description,
     perks,
     extraInfo,
@@ -178,12 +178,13 @@ app.put("/places", (req, res) => {
   } = req.body;
 
   jwt.verify(token, jwtSecert, async (err, tokenData) => {
+    if (err) throw err;
     const placeDoc = await Place.findById(id);
     if (tokenData.id === placeDoc.owner.toString()) {
       placeDoc.set({
         title,
         address,
-        photos: addedPhotos,
+        photos: addedPhoto,
         description,
         perks,
         extraInfo,
