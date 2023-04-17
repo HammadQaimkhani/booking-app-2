@@ -9,9 +9,10 @@ import { useState } from "react";
 const Places = () => {
   // create a useState for Places data.
   const [places, setPlaces] = useState([]);
+
   // create a useEffect hook for fetch the added places data.
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/places").then(({ data }) => {
+    axios.get("http://127.0.0.1:8000/user-places").then(({ data }) => {
       setPlaces(data);
     });
   }, []);

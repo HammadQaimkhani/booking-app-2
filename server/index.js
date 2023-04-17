@@ -126,6 +126,7 @@ app.post("/places", (req, res) => {
     checkIn,
     checkOut,
     maxGuests,
+    price,
   } = req.body;
   jwt.verify(token, jwtSecert, async (err, tokenData) => {
     if (err) throw err;
@@ -140,13 +141,14 @@ app.post("/places", (req, res) => {
       checkIn,
       checkOut,
       maxGuests,
+      price,
     });
     res.json(placeDoc);
   });
 });
 
 // create a get route to get data of places from DB.
-app.get("/places", (req, res) => {
+app.get("/user-places", (req, res) => {
   const { token } = req.cookies;
   jwt.verify(token, jwtSecert, async (err, tokenData) => {
     if (err) throw err;
@@ -175,6 +177,7 @@ app.put("/places", (req, res) => {
     checkIn,
     checkOut,
     maxGuests,
+    price,
   } = req.body;
 
   jwt.verify(token, jwtSecert, async (err, tokenData) => {
@@ -191,11 +194,17 @@ app.put("/places", (req, res) => {
         checkIn,
         checkOut,
         maxGuests,
+        price,
       });
       await placeDoc.save();
       res.json("ok");
     }
   });
+});
+
+// create a route for home screen places.
+app.get("/places", async (req, res) => {
+  res.json(await Place.find());
 });
 
 // connection with database

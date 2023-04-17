@@ -9,10 +9,6 @@ import AccountNav from "./AccountNav";
 const Account = () => {
   const [redirect, setRedirect] = useState(null);
   const { user, setUser, ready } = useContext(UserContext);
-  let { subpage } = useParams();
-  if (subpage === undefined) {
-    subpage = "profile";
-  }
 
   const logOut = async () => {
     await axios.post("http://127.0.0.1:8000/logout");
@@ -25,6 +21,7 @@ const Account = () => {
   }
 
   if (redirect) {
+    console.log(redirect);
     return <Navigate to={redirect} />;
   }
 
@@ -33,18 +30,15 @@ const Account = () => {
       <Header />
       <AccountNav />
 
-      {subpage === "profile" && (
-        <div className='text-center mt-8 font-semibold'>
-          logged in as {user.name} ({user.email})
-          <br />
-          <button
-            className='bg-primary text-white font-normal px-6 py-2 rounded-full w-[400px] mt-6'
-            onClick={logOut}>
-            Log out
-          </button>
-        </div>
-      )}
-      {subpage === "places" && <Places />}
+      <div className='text-center mt-8 font-semibold'>
+        logged in as {user?.name} ({user?.email})
+        <br />
+        <button
+          className='bg-primary text-white font-normal px-6 py-2 rounded-full w-[400px] mt-6'
+          onClick={logOut}>
+          Log out
+        </button>
+      </div>
     </>
   );
 };

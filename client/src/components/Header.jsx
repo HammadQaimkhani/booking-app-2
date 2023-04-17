@@ -6,7 +6,7 @@ const Header = () => {
   const { user } = useContext(UserContext);
   return (
     <>
-      <header className='p-6 flex items-center justify-between font-roboto '>
+      <header className='py-4 px-8 flex items-center justify-between font-roboto '>
         {/* logo div */}
         <Link to={"/"}>
           <div className='flex items-center cursor-pointer '>
