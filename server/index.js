@@ -207,6 +207,12 @@ app.get("/places", async (req, res) => {
   res.json(await Place.find());
 });
 
+// create a route for Place page.
+app.get("/place/:id", async (req, res) => {
+  const { id } = req.params;
+  res.json(await Place.findById(id));
+});
+
 // connection with database
 mongoose.set("strictQuery", false);
 
