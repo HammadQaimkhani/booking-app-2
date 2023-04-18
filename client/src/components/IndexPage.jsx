@@ -7,7 +7,7 @@ const IndexPage = () => {
 
   useEffect(() => {
     axios.get("http://127.0.0.1:8000/places").then(({ data }) => {
-      setPlaces([...data, ...data, ...data, ...data, ...data, ...data]);
+      setPlaces(data);
     });
   }, []);
 
@@ -28,8 +28,12 @@ const IndexPage = () => {
                 )}
               </div>
 
-              <h1 className='text-sm truncate'>{place.title}</h1>
-              <p className='font-bold leading-4'>{place.address}</p>
+              <h2 className='font-bold leading-4'>{place.address}</h2>
+              <h3 className='text-sm truncate text-gray-500'>{place.title}</h3>
+              <div className=''>
+                <span className='font-bold'>${place.price} </span>
+                per night
+              </div>
             </div>
           ))}
       </div>
