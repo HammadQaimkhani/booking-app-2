@@ -8,6 +8,7 @@ import ProfilePage from "./components/ProfilePage";
 import Places from "./components/Places";
 import PlacesFormPage from "./components/PlacesFormPage";
 import PlacePage from "./components/PlacePage";
+
 function App() {
   axios.defaults.withCredentials = true;
   return (
