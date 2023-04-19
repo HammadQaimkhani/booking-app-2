@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import BookingWidget from "./BookingWidget";
 
 const PlacePage = () => {
   const { id } = useParams();
@@ -147,14 +148,13 @@ const PlacePage = () => {
           </button>
         </div>
 
-        {/* Display the data of Description */}
+        {/* Display the data of CheckIn || CheckOut || maxGuests || Price || Description */}
+
         <div className='my-4'>
           <h2 className='text-2xl font-semibold'>Description</h2>
           {places.description}
         </div>
-
-        {/* Display the data of CheckIn || CheckOut || maxGuests || Price  */}
-        <div className='grid grid-cols-2'>
+        <div className='grid grid-cols-1 md:grid-cols-[2fr_1fr]'>
           <div>
             Check in : {places.checkIn}
             <br />
@@ -162,17 +162,7 @@ const PlacePage = () => {
             <br />
             Number of Guests : {places.maxGuests}
           </div>
-
-          <div>
-            <div className='bg-white shadow p-4 rounded-2xl'>
-              <div className='text-2xl text-center mb-2'>
-                price : ${places.price}/ per night
-              </div>
-              <button className='bg-primary w-full p-2 rounded-2xl text-white'>
-                book this place
-              </button>
-            </div>
-          </div>
+          {/* <BookingWidget selected={places} onChange={setPlaces} /> */}
         </div>
       </div>
     </>
