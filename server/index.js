@@ -7,6 +7,7 @@ const imageDownloader = require("image-downloader");
 const cookieParser = require("cookie-parser");
 const User = require("./model/UserSchema.js");
 const Place = require("./model/place.js");
+const Booking = require("./model/booking.js");
 const multer = require("multer");
 const fs = require("fs");
 
@@ -211,6 +212,22 @@ app.get("/places", async (req, res) => {
 app.get("/place/:id", async (req, res) => {
   const { id } = req.params;
   res.json(await Place.findById(id));
+});
+
+// create a route to store booking site.
+app.post("/booking", async (req, res) => {
+  const { place, checkIn, checkOut, maxGuests, name, mobile, price } = req.body;
+  res.json(
+    await Booking.create({
+      place,
+      checkIn,
+      checkOut,
+      maxGuests,
+      name,
+      mobile,
+      price,
+    })
+  );
 });
 
 // connection with database

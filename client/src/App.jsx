@@ -20,6 +20,7 @@ function App() {
         <Route path='/place/:id' element={<PlacePage />} />
         <Route path='/account' element={<ProfilePage />} />
         <Route path='/account/places' element={<Places />} />
+        {/* <Route path='/account/booking' element={<Places />} /> */}
         <Route path='/account/places/new' element={<PlacesFormPage />} />
         <Route path='/account/places/:id' element={<PlacesFormPage />} />
       </Routes>

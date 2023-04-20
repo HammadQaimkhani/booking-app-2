@@ -31,7 +31,7 @@ const PlacePage = () => {
       <div className='absolute inset-0 bg-black text-white min-h-screen'>
         <div className='bg-black p-8 grid gap-2 '>
           <div className=''>
-            <h2 className='text-3xl'>Photo of {places.title}</h2>
+            <h2 className='text-3xl mr-48'>Photo of {places.title}</h2>
             <button
               onClick={() => setShowAllPhotos(false)}
               className='fixed right-12 top-8 flex gap-2 py-2 px-4 rounded-2xl bg-white text-black shadow-md shadow-black '>
@@ -102,6 +102,7 @@ const PlacePage = () => {
               {places.photos?.[0] && (
                 <div>
                   <img
+                    onClick={() => setShowAllPhotos(true)}
                     className='aspect-square object-cover'
                     src={"http://localhost:8000/uploads/" + places.photos[0]}
                     alt=''
@@ -112,6 +113,7 @@ const PlacePage = () => {
             <div className='grid'>
               {places.photos?.[1] && (
                 <img
+                  onClick={() => setShowAllPhotos(true)}
                   className='aspect-square object-cover'
                   src={"http://localhost:8000/uploads/" + places.photos[1]}
                   alt=''
@@ -120,6 +122,7 @@ const PlacePage = () => {
               <div className='overflow-hidden'>
                 {places.photos?.[2] && (
                   <img
+                    onClick={() => setShowAllPhotos(true)}
                     className='aspect-square object-cover'
                     src={"http://localhost:8000/uploads/" + places.photos[2]}
                     alt=''
@@ -150,19 +153,25 @@ const PlacePage = () => {
 
         {/* Display the data of CheckIn || CheckOut || maxGuests || Price || Description */}
 
-        <div className='my-4'>
-          <h2 className='text-2xl font-semibold'>Description</h2>
-          {places.description}
-        </div>
         <div className='grid grid-cols-1 md:grid-cols-[2fr_1fr]'>
           <div>
+            <div className='my-4 mr-10'>
+              <h2 className='text-2xl font-semibold'>Description</h2>
+              {places.description}
+            </div>
             Check in : {places.checkIn}
             <br />
             Check out : {places.checkOut}
             <br />
             Number of Guests : {places.maxGuests}
           </div>
-          {/* <BookingWidget selected={places} onChange={setPlaces} /> */}
+          <div>
+            <BookingWidget places={places} />
+          </div>
+        </div>
+        <div className='mb-4 mt-1 '>
+          <h2 className='text-2xl font-semibold'>Exta Info</h2>
+          <p className='text-sm text-gray-700'>{places.extraInfo}</p>
         </div>
       </div>
     </>
