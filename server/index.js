@@ -215,7 +215,7 @@ app.get("/place/:id", async (req, res) => {
 });
 
 // create a route to store booking site.
-app.post("/booking", async (req, res) => {
+app.post("/bookings", async (req, res) => {
   const { place, checkIn, checkOut, maxGuests, name, mobile, price } = req.body;
   res.json(
     await Booking.create({
@@ -228,6 +228,16 @@ app.post("/booking", async (req, res) => {
       price,
     })
   );
+});
+
+// create GET route for get the data of booking.
+app.get("/bookings", (req, res) => {
+  const { token } = req.cookies;
+  // check that user in login or not.
+  jwt.verify(token, jwtSecert, async (err, tokenData) => {
+    if (err) throw err;
+    res.json(await Booking.find());
+  });
 });
 
 // connection with database

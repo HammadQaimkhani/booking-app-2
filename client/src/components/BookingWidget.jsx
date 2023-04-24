@@ -18,12 +18,11 @@ const BookingWidget = ({ places }) => {
       new Date(checkOut),
       new Date(checkIn)
     );
-    console.log(numberOfDays);
   }
 
   // create a function to book the place.
   const bookThisPlace = async () => {
-    const response = await axios.post("http://127.0.0.1:8000/booking", {
+    const response = await axios.post("http://127.0.0.1:8000/bookings", {
       place: places._id,
       checkIn,
       checkOut,
@@ -32,7 +31,7 @@ const BookingWidget = ({ places }) => {
       price: numberOfDays * places.price,
     });
     const bookingId = response.data._id;
-    setRedirect("/account/booking/" + bookingId);
+    setRedirect("/account/bookings/" + bookingId);
   };
   if (redirect) {
     return <Navigate to={redirect} />;
