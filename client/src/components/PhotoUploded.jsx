@@ -45,7 +45,7 @@ const PhotoUploded = ({ addedPhoto, onChange }) => {
   };
 
   // remove photo by button.
-  const removePhoto = (fileName, e) => {
+  const removePhoto = (e, fileName) => {
     e.preventDefault();
 
     onChange([
