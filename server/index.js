@@ -236,7 +236,7 @@ app.get("/bookings", (req, res) => {
   // check that user in login or not.
   jwt.verify(token, jwtSecert, async (err, tokenData) => {
     if (err) throw err;
-    res.json(await Booking.find());
+    res.json(await Booking.find({}));
   });
 });
 

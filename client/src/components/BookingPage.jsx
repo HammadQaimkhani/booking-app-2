@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { differenceInCalendarDays } from "date-fns";
 import Header from "./Header";
 import AccountNav from "./AccountNav";
+import { format } from "date-fns";
 import axios from "axios";
 
 const BookingPage = () => {
@@ -20,15 +21,13 @@ const BookingPage = () => {
       {bookings?.length > 0 &&
         bookings.map(booking => (
           <div>
-            <h2>{booking.name}</h2>
-            <h2>
-              {differenceInCalendarDays(
-                new Date(booking.checkOut),
-                new Date(booking.checkIn)
-              )}
-            </h2>
-            {/* <h2>{differenceInCalendarDays(new Date(booking.checkOut))}</h2> */}
-            <p>{booking.place}</p>
+            <h2 className='text-2xl '>{booking.name}</h2>
+            <div className='flex gap-2 text-blue-400 '>
+              <h2>{format(new Date(booking.checkIn), "dd.MM.yyyy")}</h2>
+              <h2 className='text-red-600'>
+                {format(new Date(booking.checkOut), "dd.MM.yyyy")}
+              </h2>
+            </div>
           </div>
         ))}
     </>
