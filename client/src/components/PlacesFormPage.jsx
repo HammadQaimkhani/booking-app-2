@@ -41,37 +41,32 @@ const PlacesFormPage = () => {
     e.preventDefault();
     if (id) {
       // update
-      await axios.put("https://booking-app-2-one.vercel.app/places", {
+      await axios.put("http://127.0.0.1:8000/places", {
         id,
         ...placeData,
       });
       setRedirect(true);
     } else {
       // save the data
-      await axios.post(
-        "https://booking-app-2-one.vercel.app/places",
-        placeData
-      );
+      await axios.post("http://127.0.0.1:8000/places", placeData);
       setRedirect(true);
     }
   };
   useEffect(() => {
     if (id) {
-      axios
-        .get("https://booking-app-2-one.vercel.app/places/" + id)
-        .then(response => {
-          const { data } = response;
-          setTitle(data.title);
-          setAddress(data.address);
-          setAddedPhoto(data.photos);
-          setDescription(data.description);
-          setPerks(data.perks);
-          setExtraInfo(data.extraInfo);
-          setCheckIn(data.checkIn);
-          setCheckOut(data.checkOut);
-          setMaxGuests(data.maxGuests);
-          setPrice(data.price);
-        });
+      axios.get("http://127.0.0.1:8000/places/" + id).then(response => {
+        const { data } = response;
+        setTitle(data.title);
+        setAddress(data.address);
+        setAddedPhoto(data.photos);
+        setDescription(data.description);
+        setPerks(data.perks);
+        setExtraInfo(data.extraInfo);
+        setCheckIn(data.checkIn);
+        setCheckOut(data.checkOut);
+        setMaxGuests(data.maxGuests);
+        setPrice(data.price);
+      });
     }
   }, [id]);
 

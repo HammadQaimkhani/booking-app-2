@@ -11,7 +11,7 @@ const Account = () => {
   const { user, setUser, ready } = useContext(UserContext);
 
   const logOut = async () => {
-    await axios.post("https://booking-app-2-one.vercel.app/logout");
+    await axios.post("http://127.0.0.1:8000/logout");
     setUser(null);
     setRedirect("/");
   };

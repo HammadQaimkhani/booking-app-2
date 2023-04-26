@@ -12,7 +12,7 @@ const PhotoUploded = ({ addedPhoto, onChange }) => {
     e.preventDefault();
 
     const { data: fileName } = await axios.post(
-      "https://booking-app-2-one.vercel.app/upload-by-links",
+      "http://127.0.0.1:8000/upload-by-links",
       {
         link: photoLink,
       }
@@ -31,7 +31,7 @@ const PhotoUploded = ({ addedPhoto, onChange }) => {
       data.append("photos", files[i]);
     }
     axios
-      .post("https://booking-app-2-one.vercel.app/uploads", data, {
+      .post("http://127.0.0.1:8000/uploads", data, {
         Headers: {
           "Content-type": "multipart/form-data",
         },
@@ -90,7 +90,7 @@ const PhotoUploded = ({ addedPhoto, onChange }) => {
           addedPhoto.map(link => (
             <div className='h-32  flex relative' key={link}>
               <img
-                src={`https://booking-app-2-one.vercel.app/uploads/${link}`}
+                src={`http://localhost:8000/uploads/${link}`}
                 alt=''
                 className='rounded-2xl w-full object-cover'
               />
