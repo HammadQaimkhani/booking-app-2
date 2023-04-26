@@ -13,7 +13,9 @@ const PlaceImg = ({ place, index = 0, className = null }) => {
   return (
     <img
       className={className}
-      src={"http://localhost:8000/uploads/" + place.photos[index]}
+      src={
+        "https://booking-app-2-one.vercel.app/uploads/" + place.photos[index]
+      }
       alt=''
     />
   );

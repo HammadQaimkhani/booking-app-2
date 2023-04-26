@@ -13,9 +13,11 @@ const PlacePage = () => {
   //   create a useEffect Hook for fetch the data in DB.
   useEffect(() => {
     if (id) {
-      axios.get("http://127.0.0.1:8000/place/" + id).then(({ data }) => {
-        setPlaces(data);
-      });
+      axios
+        .get("https://booking-app-2-one.vercel.app/place/" + id)
+        .then(({ data }) => {
+          setPlaces(data);
+        });
     }
     return;
   }, [id]);
@@ -54,7 +56,10 @@ const PlacePage = () => {
           {places.photos?.length > 0 &&
             places.photos.map(place => (
               <div className=''>
-                <img src={"http://localhost:8000/uploads/" + place} alt='' />
+                <img
+                  src={"https://booking-app-2-one.vercel.app/uploads/" + place}
+                  alt=''
+                />
               </div>
             ))}
         </div>
@@ -104,7 +109,10 @@ const PlacePage = () => {
                   <img
                     onClick={() => setShowAllPhotos(true)}
                     className='aspect-square object-cover'
-                    src={"http://localhost:8000/uploads/" + places.photos[0]}
+                    src={
+                      "https://booking-app-2-one.vercel.app/uploads/" +
+                      places.photos[0]
+                    }
                     alt=''
                   />
                 </div>
@@ -115,7 +123,10 @@ const PlacePage = () => {
                 <img
                   onClick={() => setShowAllPhotos(true)}
                   className='aspect-square object-cover'
-                  src={"http://localhost:8000/uploads/" + places.photos[1]}
+                  src={
+                    "https://booking-app-2-one.vercel.app/uploads/" +
+                    places.photos[1]
+                  }
                   alt=''
                 />
               )}
@@ -124,7 +135,10 @@ const PlacePage = () => {
                   <img
                     onClick={() => setShowAllPhotos(true)}
                     className='aspect-square object-cover'
-                    src={"http://localhost:8000/uploads/" + places.photos[2]}
+                    src={
+                      "https://booking-app-2-one.vercel.app/uploads/" +
+                      places.photos[2]
+                    }
                     alt=''
                   />
                 )}

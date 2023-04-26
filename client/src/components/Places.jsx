@@ -13,9 +13,11 @@ const Places = () => {
 
   // create a useEffect hook for fetch the added places data.
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/user-places").then(({ data }) => {
-      setPlaces(data);
-    });
+    axios
+      .get("https://booking-app-2-one.vercel.app/user-places")
+      .then(({ data }) => {
+        setPlaces(data);
+      });
   }, []);
 
   return (

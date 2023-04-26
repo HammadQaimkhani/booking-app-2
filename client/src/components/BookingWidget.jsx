@@ -31,14 +31,17 @@ const BookingWidget = ({ places }) => {
 
   // create a function to book the place.
   const bookThisPlace = async () => {
-    const response = await axios.post("http://127.0.0.1:8000/bookings", {
-      place: places._id,
-      checkIn,
-      checkOut,
-      name,
-      mobile,
-      price: numberOfDays * places.price,
-    });
+    const response = await axios.post(
+      "https://booking-app-2-one.vercel.app/bookings",
+      {
+        place: places._id,
+        checkIn,
+        checkOut,
+        name,
+        mobile,
+        price: numberOfDays * places.price,
+      }
+    );
     const bookingId = response.data._id;
     setRedirect("/account/bookings");
   };

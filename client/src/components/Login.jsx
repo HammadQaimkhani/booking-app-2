@@ -14,10 +14,13 @@ const Login = () => {
   const loginSubmit = async e => {
     e.preventDefault();
     try {
-      const user = await axios.post("http://127.0.0.1:8000/login", {
-        email,
-        password,
-      });
+      const user = await axios.post(
+        "https://booking-app-2-one.vercel.app/login",
+        {
+          email,
+          password,
+        }
+      );
       setUser(user.data);
       setRedirect(true);
     } catch (error) {

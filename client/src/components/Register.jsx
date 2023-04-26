@@ -12,7 +12,7 @@ const Register = () => {
   const resgisterTest = async e => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8000/register", {
+      await axios.post("https://booking-app-2-one.vercel.app/register", {
         name,
         email,
         password,
