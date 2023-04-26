@@ -19,7 +19,7 @@ require("dotenv").config();
 const bycrptSlat = bycrpt.genSaltSync(10);
 
 // set JWT secert key
-const jwtSecert = process.env.JWT_SECERET;
+const jwtSecert = "ajkakkajsfkasfksjk";
 
 const app = express();
 
@@ -27,7 +27,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: process.env.BASE_URL,
+    origin: "http://127.0.0.1:5173",
   })
 );
 app.use(cookieParser());

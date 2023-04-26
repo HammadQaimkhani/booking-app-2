@@ -10,7 +10,7 @@ const BookingPage = () => {
 
   useEffect(() => {
     axios
-      .get("https://booking-app-2-one.vercel.app/bookings")
+      .get("http://127.0.0.1:8000/bookings")
       .then(({ data }) => setBookings(data));
   }, []);
 

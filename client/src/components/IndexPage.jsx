@@ -7,11 +7,9 @@ const IndexPage = () => {
   const [places, setPlaces] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("https://booking-app-2-one.vercel.app/places")
-      .then(({ data }) => {
-        setPlaces(data);
-      });
+    axios.get("http://127.0.0.1:8000/places").then(({ data }) => {
+      setPlaces(data);
+    });
   }, []);
 
   return (
@@ -25,10 +23,7 @@ const IndexPage = () => {
                 {place.photos?.[0] && (
                   <img
                     className='rounded-2xl object-cover aspect-square'
-                    src={
-                      "https://booking-app-2-one.vercel.app/uploads/" +
-                      place.photos?.[0]
-                    }
+                    src={"http://localhost:8000/uploads/" + place.photos?.[0]}
                     alt=''
                   />
                 )}
