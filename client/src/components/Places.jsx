@@ -5,6 +5,7 @@ import AccountNav from "./AccountNav";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
+import PlaceImg from "./PlaceImg";
 
 const Places = () => {
   // create a useState for Places data.
@@ -49,13 +50,7 @@ const Places = () => {
               to={"/account/places/" + place._id}
               className=' flex gap-4 bg-gray-100 p-4 rounded-2xl mx-2 mb-2'>
               <div className=' flex w-32 h-32 bg-gray-300 grow shrink-0'>
-                {place.photos.length > 0 && (
-                  <img
-                    className='object-cover '
-                    src={"http://localhost:8000/uploads/" + place.photos[0]}
-                    alt=''
-                  />
-                )}
+                <PlaceImg place={place} />
               </div>
               <div className=''>
                 <h2 className='text-xl '>{place.title}</h2>

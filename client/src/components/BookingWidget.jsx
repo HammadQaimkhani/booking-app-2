@@ -40,7 +40,7 @@ const BookingWidget = ({ places }) => {
       price: numberOfDays * places.price,
     });
     const bookingId = response.data._id;
-    setRedirect("/account/bookings/" + bookingId);
+    setRedirect("/account/bookings");
   };
   if (redirect) {
     return <Navigate to={redirect} />;

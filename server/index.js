@@ -10,6 +10,8 @@ const Place = require("./model/place.js");
 const Booking = require("./model/booking.js");
 const multer = require("multer");
 const fs = require("fs");
+const { resolve } = require("path");
+const { rejects } = require("assert");
 
 require("dotenv").config();
 
@@ -31,6 +33,16 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 app.use("/uploads", express.static(__dirname + "/uploads"));
+
+// function to check the booking of separate users.
+const getUserDataFromToken = req => {
+  return new Promise((resolve, reject) => {
+    jwt.verify(req.cookies.token, jwtSecert, async (err, tokenData) => {
+      if (err) throw err;
+      resolve(tokenData);
+    });
+  });
+};
 
 // Register the user
 app.post("/register", async (req, res) => {
@@ -216,10 +228,12 @@ app.get("/place/:id", async (req, res) => {
 
 // create a route to store booking site.
 app.post("/bookings", async (req, res) => {
+  const userData = await getUserDataFromToken(req);
   const { place, checkIn, checkOut, maxGuests, name, mobile, price } = req.body;
   res.json(
     await Booking.create({
       place,
+      user: userData.id,
       checkIn,
       checkOut,
       maxGuests,
@@ -231,13 +245,11 @@ app.post("/bookings", async (req, res) => {
 });
 
 // create GET route for get the data of booking.
-app.get("/bookings", (req, res) => {
+app.get("/bookings", async (req, res) => {
   const { token } = req.cookies;
   // check that user in login or not.
-  jwt.verify(token, jwtSecert, async (err, tokenData) => {
-    if (err) throw err;
-    res.json(await Booking.find({}));
-  });
+  const userData = await getUserDataFromToken(req);
+  res.json(await Booking.find({ user: userData.id }).populate("place"));
 });
 
 // connection with database

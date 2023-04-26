@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Header from "./Header";
 import axios from "axios";
 
@@ -7,6 +7,7 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
   const resgisterTest = async e => {
     e.preventDefault();
@@ -17,10 +18,15 @@ const Register = () => {
         password,
       });
       alert("Registration completed!!");
+      setRedirect(true);
     } catch (error) {
       alert("Registration is falied please try again....");
     }
   };
+
+  if (redirect) {
+    return <Navigate to={"/login"} />;
+  }
 
   return (
     <>
